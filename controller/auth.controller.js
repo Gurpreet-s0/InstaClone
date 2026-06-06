@@ -36,7 +36,7 @@ async function registerController(req, res) {
     { expiresIn: "1d" },
   );
 
-  res.cookie("Jwt-Token", token);
+  res.cookie("token", token);
 
   res.status(200).json({
     message: "user created succesfully",
@@ -80,7 +80,7 @@ async function loginController(req, res) {
       { expiresIn: "1d" },
     );
 
-    res.cookie("Jwt-Token", token);
+    res.cookie("token", token);
     res.status(200).json({
       message: "logged in",
       user: {
