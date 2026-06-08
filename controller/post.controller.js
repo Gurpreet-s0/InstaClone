@@ -37,6 +37,34 @@ async function PostController(req, res) {
   });
 }
 
+async function getPostController(req, res) {
+  const token = req.cookies.token;
+  if (!token) {
+    res.status(401).json("Token must be required");
+  }
+  let decoded;
+  try {
+    decoded = jwt.verify(token, process.env.JWT_TOKEN);
+  } catch (err) {
+    res.status(401).json({
+      message: "Token invalid or token not provided",
+      error: err,
+    });
+  }
+
+  const userId = decoded.id;
+
+  const posts = await postModal.find({
+    userId: userId,
+  });
+
+  res.status(200).json({
+    message: "Posts of the users are here ",
+    posts: posts,
+  });
+}
+
 module.exports = {
   PostController: PostController,
+  getPostController: getPostController,
 };
