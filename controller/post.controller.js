@@ -47,7 +47,7 @@ async function getPostController(req, res) {
     decoded = jwt.verify(token, process.env.JWT_TOKEN);
   } catch (err) {
     res.status(401).json({
-      message: "Token invalid or token not provided",
+      message: "Unauthorized Access",
       error: err,
     });
   }
@@ -64,7 +64,57 @@ async function getPostController(req, res) {
   });
 }
 
+
+async function getPostDetailsController(req,res){
+  const token = req.cookies.token
+  if(!token){
+    return res.status(401).json("token must be required")
+  }
+
+  let decoded 
+
+  try{
+    decoded = jwt.verify(token,process.env.JWT_TOKEN)
+
+  }
+  catch(err){
+    return res.status(401).json({
+      message:"unauthorized Access",
+      error:err.message
+    })
+  }
+
+  const userId = decoded.id
+  const postId = req.params.postId
+
+  let postDetails
+try{
+  postDetails = await postModal.findById(postId)
+
+}
+ catch(err){
+if(!postDetails){
+    return res.status(404).json({
+      message:"post details are not available",
+      error:err.message
+    })
+  }
+ }
+  
+  const isValidUser = postDetails.userId.toString() === userId.toString()
+
+  if(!isValidUser){
+    return res.status(403).json({
+      message:"Forbidden access"
+    })
+  }
+  return res.status(200).json({
+    message:"post details fetched successfully",
+    postDetails:postDetails
+  })
+}
 module.exports = {
   PostController: PostController,
   getPostController: getPostController,
+  getPostDetailsController:getPostDetailsController
 };
