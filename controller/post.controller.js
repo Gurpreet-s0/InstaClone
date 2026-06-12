@@ -12,24 +12,12 @@ async function PostController(req, res) {
     fileName: req.file.originalname,
   });
 
-  const token = req.cookies.token;
-  if (!token) {
-    res.status(401).json("Token must be required");
-  }
-  let decoded = null;
-  try {
-    decoded = jwt.verify(token, process.env.JWT_TOKEN);
-  } catch (err) {
-    return res.status(401).json({
-      message: "Unauthorized token",
-      error: err,
-    });
-  }
+ const userId = req.user.id
 
   const post = await postModal.create({
     captions: req.body.captions,
     postPic: file.url,
-    userId: decoded.id,
+    userId: userId,
   });
   res.status(201).json({
     message: "Post created",
@@ -38,21 +26,8 @@ async function PostController(req, res) {
 }
 
 async function getPostController(req, res) {
-  const token = req.cookies.token;
-  if (!token) {
-    res.status(401).json("Token must be required");
-  }
-  let decoded;
-  try {
-    decoded = jwt.verify(token, process.env.JWT_TOKEN);
-  } catch (err) {
-    res.status(401).json({
-      message: "Unauthorized Access",
-      error: err,
-    });
-  }
-
-  const userId = decoded.id;
+  
+  const userId = req.user.id;
 
   const posts = await postModal.find({
     userId: userId,
@@ -66,25 +41,8 @@ async function getPostController(req, res) {
 
 
 async function getPostDetailsController(req,res){
-  const token = req.cookies.token
-  if(!token){
-    return res.status(401).json("token must be required")
-  }
-
-  let decoded 
-
-  try{
-    decoded = jwt.verify(token,process.env.JWT_TOKEN)
-
-  }
-  catch(err){
-    return res.status(401).json({
-      message:"unauthorized Access",
-      error:err.message
-    })
-  }
-
-  const userId = decoded.id
+  
+  const userId = req.user.id
   const postId = req.params.postId
 
   let postDetails

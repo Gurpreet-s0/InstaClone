@@ -6,6 +6,9 @@ const connectToDb = async  ()=>{
         console.log("connected to db")
 
      })
+     .catch(()=>{
+      console.log("not connectd to db")
+     })
 
 }
 
