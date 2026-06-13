@@ -1,4 +1,4 @@
-const { PostController, getPostDetailsController } = require("../controller/post.controller");
+const { PostController, getPostDetailsController, likeController } = require("../controller/post.controller");
 const { getPostController } = require("../controller/post.controller");
 const express = require("express");
 const postRouter = express.Router();
@@ -12,5 +12,7 @@ postRouter.post("/", upload.single("image"),usermiddleware, PostController);
 postRouter.get("/",usermiddleware, getPostController);
 
 postRouter.get("/:postId",usermiddleware,getPostDetailsController)
+
+postRouter.post("/like/:postId",usermiddleware,likeController)
 
 module.exports = postRouter;
