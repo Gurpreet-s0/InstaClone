@@ -7,6 +7,12 @@ const followerSchema = new mongoose.Schema({
     followee:{
         type:String
         
+    },
+    request:{
+        type:String,
+        enum:["pending","accepted","rejected"],
+        require:[true],
+        default:"pending"
     }
 },{
     timestamps:true
