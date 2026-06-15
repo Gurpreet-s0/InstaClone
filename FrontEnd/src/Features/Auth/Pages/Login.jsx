@@ -61,7 +61,7 @@ const Login = () => {
             placeholder="Password"
             value={Password}
           />
-          <Link to="/register">Already have an account?</Link>
+          <Link className="hover:underline" to="/register">Already have an account?</Link>
           <button className="bg-amber-50 border-2 border-amber-50 text-[#141313] px-6 py-3  rounded-3xl hover:bg-[#141313] hover:text-amber-50 transition cursor-pointer duration-250  ">
             Login
           </button>

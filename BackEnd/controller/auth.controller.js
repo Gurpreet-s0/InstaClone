@@ -106,7 +106,19 @@ async function loginController(req, res) {
   } // if password matches then user is given jwt token and send user details in response
 }
 
+
+async function getMeController(req,res){
+  const user = req.user.id
+  
+  const data = await userModal.findById(user)
+
+  res.status(200).json({
+    message:"Heres your data",
+    data
+  })
+}
 module.exports = {
   registerController: registerController,
   loginController: loginController,
+  getMeController:getMeController
 };
