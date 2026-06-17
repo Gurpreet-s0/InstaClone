@@ -108,13 +108,13 @@ async function loginController(req, res) {
 
 
 async function getMeController(req,res){
-  const user = req.user.id
+  const loggedInUser = req.user.id
   
-  const data = await userModal.findById(user)
+  const user = await userModal.findById(loggedInUser)
 
   res.status(200).json({
     message:"Heres your data",
-    data
+    user
   })
 }
 module.exports = {
