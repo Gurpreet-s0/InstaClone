@@ -21,7 +21,7 @@ async function PostController(req, res) {
   const post = await postModal.create({
     captions: req.body.captions,
     postPic: file.url,
-    userId: userId,
+    user: userId,
   });
   res.status(201).json({
     message: "Post created",
@@ -34,7 +34,7 @@ async function getPostController(req, res) {
   const userId = req.user.id;
 
   const posts = await postModal.find({
-    userId: userId,
+    user: userId,
 
   });
 
@@ -63,7 +63,7 @@ if(!postDetails){
   }
  }
   
-  const isValidUser = postDetails.userId.toString() === userId.toString()
+  const isValidUser = postDetails.user.toString() === userId.toString()
 
   if(!isValidUser){
     return res.status(403).json({
@@ -91,7 +91,7 @@ async function likeController(req,res){
   }
 
   const isUserAlreadyLiked = await likeModal.findOne({
-    userId: userId,
+    user: userId,
     postId:postId
   })
 
@@ -102,7 +102,7 @@ async function likeController(req,res){
   }
 
   const like = await likeModal.create({
-    userId:userId,
+    user:userId,
     postId:postId
   })
 
@@ -112,9 +112,20 @@ async function likeController(req,res){
   })
 }
 
+async function getFeedPostsController(req,res){
+
+  const posts = await postModal.find().populate("user")
+
+  res.status(200).json({
+    message:"Post fetched successfully",
+    posts
+  })
+}
+
 module.exports = {
   PostController: PostController,
   getPostController: getPostController,
   getPostDetailsController:getPostDetailsController,
-  likeController:likeController
+  likeController:likeController,
+  getFeedPostsController:getFeedPostsController
 };

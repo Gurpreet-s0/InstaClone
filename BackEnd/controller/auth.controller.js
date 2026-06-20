@@ -70,7 +70,7 @@ async function loginController(req, res) {
         email: email,
       },
     ],
-  }); // check if the user which the user tries to login reall exist or not
+  }).select("+password"); // check if the user which the user tries to login reall exist or not
 
   if (!user) {
     res.status(409).json("user not found");

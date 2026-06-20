@@ -1,5 +1,5 @@
 const { PostController, getPostDetailsController, likeController } = require("../controller/post.controller");
-const { getPostController } = require("../controller/post.controller");
+const { getPostController , getFeedPostsController } = require("../controller/post.controller");
 const express = require("express");
 const postRouter = express.Router();
 const multer = require("multer");
@@ -10,6 +10,8 @@ const usermiddleware = require("../Middlewares/auth.middleware")
 postRouter.post("/", upload.single("image"),usermiddleware, PostController);
 
 postRouter.get("/",usermiddleware, getPostController);
+
+postRouter.get("/feed", usermiddleware,getFeedPostsController)
 
 postRouter.get("/:postId",usermiddleware,getPostDetailsController)
 
