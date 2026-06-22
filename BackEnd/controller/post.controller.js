@@ -77,7 +77,7 @@ if(!postDetails){
 }
 
 async function likeController(req,res){
-  const userId = req.user.id
+  const username = req.user.username
   const postId = req.params.postId
 
   const isPostExist = await postModal.findOne({
@@ -91,7 +91,7 @@ async function likeController(req,res){
   }
 
   const isUserAlreadyLiked = await likeModal.findOne({
-    user: userId,
+    username: username,
     postId:postId
   })
 
@@ -102,7 +102,7 @@ async function likeController(req,res){
   }
 
   const like = await likeModal.create({
-    user:userId,
+    username:username,
     postId:postId
   })
 
@@ -113,8 +113,17 @@ async function likeController(req,res){
 }
 
 async function getFeedPostsController(req,res){
+  const username = req.user.username
+  const posts = await Promise.all((await postModal.find().populate("user").lean())
+  .map(async (post)=>{
 
-  const posts = await postModal.find().populate("user")
+    const isLiked = await likeModal.findOne({
+      username:username,
+      postId:post._id
+    })
+    post.isliked = Boolean(isLiked)
+    return post
+  }))
 
   res.status(200).json({
     message:"Post fetched successfully",

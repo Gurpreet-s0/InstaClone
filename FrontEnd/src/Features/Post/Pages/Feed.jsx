@@ -8,7 +8,7 @@ console.log(feed)
    loading? <h1 className="text-amber-50 text-3xl"> Loading Feed</h1>:
     <div className=" flex justify-center items-center flex-col ">
       {feed.map((e) => {
-        return <Post username={e.user.username} captions={e.captions} postImage={e.postPic} profilePic = {e.user.profilePic}  />;
+        return <Post username={e.user.username} captions={e.captions} postImage={e.postPic} profilePic = {e.user.profilePic} isLiked={e.isliked}  />;
       })}
     </div>
   );

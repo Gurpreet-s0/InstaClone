@@ -6,9 +6,9 @@ const likeSchema = new mongoose.Schema({
         ref:"postId",
         require:[true]
     },
-    userId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"userId",
+    username:{
+        type:String,
+        ref:"username",
         require:[true]
     }
 },
@@ -16,7 +16,7 @@ const likeSchema = new mongoose.Schema({
     timestamps:true
 })
 
-likeSchema.index({postId:1,userId:1},{unique:true})
+likeSchema.index({postId:1,username:1},{unique:true})
 
 const likeModal = mongoose.model("Likes",likeSchema )
 
