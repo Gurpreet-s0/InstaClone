@@ -11,7 +11,7 @@ export async function  getAllPosts(){
     try{
         const response = await api.get("/api/post/feed")
         
-        return response.data
+        return response
     }
     catch(err){
         console.log(err)

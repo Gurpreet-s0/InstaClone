@@ -5,8 +5,8 @@ export const PostContext = createContext()
 
 const PostContextProvider = function({children}){
 
-       const [feed, setfeed] = useState(null)
-       const [loading, setloading] = useState(null)
+       const [feed, setfeed] = useState([])
+       const [loading, setloading] = useState(true)
        const [username, setusername] = useState(null)
 
        

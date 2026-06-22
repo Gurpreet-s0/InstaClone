@@ -1,20 +1,25 @@
-import React, { useContext } from 'react'
-import { PostContext } from '../Context/Post.context'
+import { useContext, useEffect } from "react";
+import { PostContext } from "../Context/Post.context";
 import { getAllPosts } from "../Services/post.api";
 const UsePost = () => {
+  const context = useContext(PostContext);
+  const {  setfeed, setusername, setloading } = context;
 
-const {feed,username,loading,setfeed,setusername,setloading} = useContext(PostContext)
+  useEffect(() => {
+    getAllPosts()
+      .then((res) => {
+        setfeed(res.data.posts);
+        setusername(res.data.username)
+      })
+      .catch((res) => {
+        console.log(res);
+      })
+      .finally(()=>{
+        setloading(false)
+      })
+  }, []);
 
- useEffect( ()=>{
-            
-            getAllPosts().then((res))
-            
-        },[])
-  return (
+  return context;
+};
 
-
-
-  )
-}
-
-export default UsePost
+export default UsePost;
