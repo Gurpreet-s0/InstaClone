@@ -2,7 +2,7 @@ import Post from "../Components/Post";
 import UsePost from "../hooks/UsePost";
 import { Link } from "react-router";
 const Feed = () => {
-  const { feed, loading } = UsePost();
+  const { feed, loading,likeHandler,unLikeHandler } = UsePost();
 
 
 
@@ -27,6 +27,8 @@ const Feed = () => {
               profilePic={e.user.profilePic}
               isLiked={e.isliked}
               postId={e._id}
+              likeHandler={likeHandler}
+              unLikeHandler={unLikeHandler}
             />
           );
         })}

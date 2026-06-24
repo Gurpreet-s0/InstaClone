@@ -16,7 +16,7 @@ const UsePost = () => {
       .finally(() => {
         setloading(false)
       });
-  },);
+  },[]);
 
   const createPostHandler = async function (file, captions) {
     if (!file) {

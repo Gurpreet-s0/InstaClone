@@ -1,8 +1,8 @@
 import UsePost from "../hooks/UsePost";
 
-const Post = ({username,profilePic,postImage,captions,isLiked,postId}) => {
+const Post = ({username,profilePic,postImage,captions,isLiked,postId,likeHandler,unLikeHandler}) => {
 
-  const {likeHandler,unLikeHandler}= UsePost()
+
 
   return (
     <div className="p-4 flex flex-col gap-5 md:w-150 justify-center md:items-center  md:border-x-2 md:border-gray-700 ">
