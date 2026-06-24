@@ -17,3 +17,16 @@ export async function  getAllPosts(){
         console.log(err)
     }
 }
+
+export async function createNewPost(file,captions){
+    try{
+        const formData = new FormData()
+        formData.append("image",file)
+        formData.append("captions",captions)
+        const response = await api.post("/api/post/create-post",formData)
+        return response.data
+    }
+    catch(err){
+        console.log(err)
+    }
+}

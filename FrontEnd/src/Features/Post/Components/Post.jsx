@@ -1,8 +1,4 @@
-import UsePost from "../hooks/UsePost";
-
 const Post = ({username,profilePic,postImage,captions,isLiked}) => {
-  UsePost()
-console.log(isLiked)
   return (
     <div className="p-4 flex flex-col gap-5 md:w-150 justify-center md:items-center  md:border-x-2 md:border-gray-700 ">
       <div className="flex justify-start gap-5 items-center">
@@ -24,8 +20,8 @@ console.log(isLiked)
           :
           "ri-poker-hearts-line"
         }></i>
-        <i class="ri-save-2-line"></i>
-        <i class="ri-share-forward-line"></i>
+        <i className="ri-save-2-line"></i>
+        <i className="ri-share-forward-line"></i>
       </div>
       <div className="border-gray-700 w-full h-1 bg-gray-700"></div>
 

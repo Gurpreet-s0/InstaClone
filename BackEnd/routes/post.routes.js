@@ -7,9 +7,9 @@ const upload = multer({ storage: multer.memoryStorage() });
 const usermiddleware = require("../Middlewares/auth.middleware")
 
 
-postRouter.post("/", upload.single("image"),usermiddleware, PostController);
+postRouter.post("/create-post", upload.single("image"),usermiddleware, PostController);
 
-postRouter.get("/",usermiddleware, getPostController);
+postRouter.get("/getData",usermiddleware, getPostController);
 
 postRouter.get("/feed", usermiddleware,getFeedPostsController)
 
