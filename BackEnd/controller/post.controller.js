@@ -112,6 +112,31 @@ async function likeController(req,res){
   })
 }
 
+async function unLikeController(req,res){
+  const username = req.user.username
+  const postId = req.params.postId
+
+  const isUserAlreadyLiked = await likeModal.findOne({
+    postId:postId,
+    username:username
+  })
+
+  if(!isUserAlreadyLiked){
+    return res.status(400).json({
+      message:"you have not liked that post"
+    })
+  }
+
+  const unlikePost = await likeModal.findOneAndDelete({
+    postId:postId,
+    username:username
+  })
+
+  res.status(200).json({
+    message:"you have unliked the post"
+  })
+}
+
 async function getFeedPostsController(req,res){
   const username = req.user.username
   const posts = await Promise.all((await postModal.find().populate("user").lean())
@@ -136,5 +161,6 @@ module.exports = {
   getPostController: getPostController,
   getPostDetailsController:getPostDetailsController,
   likeController:likeController,
-  getFeedPostsController:getFeedPostsController
+  getFeedPostsController:getFeedPostsController,
+  unLikeController:unLikeController
 };

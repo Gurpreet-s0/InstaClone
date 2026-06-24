@@ -1,4 +1,9 @@
-const Post = ({username,profilePic,postImage,captions,isLiked}) => {
+import UsePost from "../hooks/UsePost";
+
+const Post = ({username,profilePic,postImage,captions,isLiked,postId}) => {
+
+  const {likeHandler,unLikeHandler}= UsePost()
+
   return (
     <div className="p-4 flex flex-col gap-5 md:w-150 justify-center md:items-center  md:border-x-2 md:border-gray-700 ">
       <div className="flex justify-start gap-5 items-center">
@@ -14,12 +19,16 @@ const Post = ({username,profilePic,postImage,captions,isLiked}) => {
         {captions}
       </div>
       <div className="text-4xl text-amber-50 flex justify-center gap-10 items-center">
-        <i className={
+       <button onClick={()=>{
+        isLiked?unLikeHandler(postId):likeHandler(postId)
+       }} >
+        <i  className={
           isLiked?
           "ri-poker-hearts-line  text-red-600"
           :
           "ri-poker-hearts-line"
         }></i>
+        </button> 
         <i className="ri-save-2-line"></i>
         <i className="ri-share-forward-line"></i>
       </div>

@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { PostContext } from "../Context/Post.context";
-import { createNewPost, getAllPosts } from "../Services/post.api";
+import { createNewPost, getAllPosts, unLikePost ,likePost } from "../Services/post.api";
 const UsePost = () => {
   const context = useContext(PostContext);
   const { loading, setfeed, setloading } = context;
@@ -12,11 +12,11 @@ const UsePost = () => {
       })
       .catch((res) => {
         console.log(res);
-      })
+      }) 
       .finally(() => {
         setloading(false)
       });
-  }, []);
+  },);
 
   const createPostHandler = async function (file, captions) {
     if (!file) {
@@ -33,7 +33,45 @@ const UsePost = () => {
     }
   };
 
-  return { ...context, loading, createPostHandler };
+  async function likeHandler(postId) {
+    try {
+     await likePost(postId)
+     getAllPosts()
+      .then((res) => {
+        setfeed(res.data.posts.reverse());
+      })
+      .catch((res) => {
+        console.log(res);
+      }) 
+      .finally(() => {
+        setloading(false)
+      })
+   
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function unLikeHandler(postId) {
+    try {
+     await unLikePost(postId)
+     getAllPosts()
+      .then((res) => {
+        setfeed(res.data.posts.reverse());
+      })
+      .catch((res) => {
+        console.log(res);
+      }) 
+      .finally(() => {
+        setloading(false)
+      })
+   
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  return { ...context, loading, createPostHandler ,likeHandler,unLikeHandler };
 };
 
 export default UsePost;

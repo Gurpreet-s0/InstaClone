@@ -4,6 +4,8 @@ import { Link } from "react-router";
 const Feed = () => {
   const { feed, loading } = UsePost();
 
+
+
   return loading ? (
     <h1 className="text-amber-50 text-3xl"> Loading Feed</h1>
   ) : (
@@ -14,7 +16,9 @@ const Feed = () => {
       </div>
       <div className=" flex justify-center items-center flex-col ">
         {feed.map((e) => {
+          console.log(e)
           return (
+            
             <Post
               key={e._id}
               username={e.user.username}
@@ -22,6 +26,7 @@ const Feed = () => {
               postImage={e.postPic}
               profilePic={e.user.profilePic}
               isLiked={e.isliked}
+              postId={e._id}
             />
           );
         })}

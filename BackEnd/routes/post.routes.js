@@ -1,4 +1,4 @@
-const { PostController, getPostDetailsController, likeController } = require("../controller/post.controller");
+const { PostController, getPostDetailsController, likeController, unLikeController } = require("../controller/post.controller");
 const { getPostController , getFeedPostsController } = require("../controller/post.controller");
 const express = require("express");
 const postRouter = express.Router();
@@ -17,4 +17,5 @@ postRouter.get("/:postId",usermiddleware,getPostDetailsController)
 
 postRouter.post("/like/:postId",usermiddleware,likeController)
 
+postRouter.post("/unlike/:postId",usermiddleware,unLikeController)
 module.exports = postRouter;
